@@ -1,3 +1,3 @@
 build-production:
-	php bin/console dump-static-site
+	php7.4 bin/console dump-static-site
 
