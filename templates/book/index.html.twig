@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }} by {{ book.author }}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+</style>
+
+<div class="example-wrapper">
+    <h2> {{ book.title }}</h2>
+    <h5> by {{ book.author }}</h5>
+
+    <ul>
+        {% for line in book.lines %}
+        {% include 'book/partials/line.html.twig' with {'line': line, 'location': book.location} only %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<li>
+    <a
+        href="#{{ line.number }}"
+        id="{{ line.number }}"
+    >
+        {{ line.number }}
+    </a>
+    -
+    <a
+        href="{{ location.source.url|format(location.externalId, line.time) }}"
+        target="_blank"
+    >
+        {{ line.text }}
+    </a>
+</li>
