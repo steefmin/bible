@@ -2,19 +2,83 @@
 
 {% block title %}{{ book.title }} by {{ book.author }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+
+        }
+
+        a:link {
+            color: black;
+        }
+
+        /* visited link */
+        a:visited {
+            color: black;
+        }
+
+        /* mouse over link */
+        a:hover {
+            color: blue;
+        }
+
+        /* selected link */
+        a:active {
+            color: black;
+        }
+
+        .focus-box {
+            /*border: thick solid #9393c9;*/
+            /*border-radius: 5px;*/
+            background: #e8b1b1;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-</style>
+    <div class="example-wrapper">
+        <h2> {{ book.title }}</h2>
+        <h5> by {{ book.author }}</h5>
 
-<div class="example-wrapper">
-    <h2> {{ book.title }}</h2>
-    <h5> by {{ book.author }}</h5>
+        <table cellspacing="0">
+            {% for line in book.lines %}
+                {% include 'book/partials/line.html.twig' with {'line': line, 'location': book.location} only %}
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
 
-    <ul>
-        {% for line in book.lines %}
-        {% include 'book/partials/line.html.twig' with {'line': line, 'location': book.location} only %}
-        {% endfor %}
-    </ul>
-</div>
+{% block javascripts %}
+    <script>
+        let highlightLine = function () {
+            Array.from(
+                document.getElementsByClassName('focus-box')
+            ).map(
+                element => {
+                    element.classList.remove('focus-box')
+                }
+            )
+
+            let match = window.location.hash.match(/#(\d+)-?(\d+)?/);
+            if (match) {
+                let begin = parseInt(match[1])
+                let end = parseInt(match[2])
+                if (end) {
+                    for (let n = begin; n <= end; n++) {
+                        document.getElementById(`line-${n}`).classList.add('focus-box')
+                    }
+                    return
+                }
+                document.getElementById(`line-${begin}`).classList.add('focus-box')
+            }
+        }
+        window.onhashchange = highlightLine
+        highlightLine()
+    </script>
+    {{ parent() }}
 {% endblock %}

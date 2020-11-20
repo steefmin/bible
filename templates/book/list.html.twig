@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BookController!{% endblock %}
+{% block title %}Books from Source of Truth{% endblock %}
 
 {% block body %}
 <style>
@@ -11,7 +11,7 @@
 
     <ul>
         {% for book in books %}
-            <li> <a href="{{ path('book', {id: book.id})  }}"> {{ book.title }} </a></li>
+            <li> <a href="{{ path('book-name', {author: book.author, title: book.title})  }}"> {{ book.title }} </a></li>
         {% endfor %}
     </ul>
 </div>

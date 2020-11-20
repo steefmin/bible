@@ -1,15 +1,18 @@
-<li>
-    <a
-        href="#{{ line.number }}"
-        id="{{ line.number }}"
-    >
-        {{ line.number }}
-    </a>
-    -
-    <a
-        href="{{ location.source.url|format(location.externalId, line.time) }}"
-        target="_blank"
-    >
-        {{ line.text }}
-    </a>
-</li>
+<tr id="line-{{ line.number }}">
+    <td style="text-align: right; padding-right: 5px; border: inherit; border-right: 0px;">
+        <a
+                href="#{{ line.number }}"
+                id="{{ line.number }}"
+        >
+            {{ line.number }}:
+        </a>
+    </td>
+    <td style="border: inherit; border-left: 0px; padding-left: 0px">
+        <a
+                href="{{ location.source.url|format(location.externalId, line.time) }}"
+                target="_blank"
+        >
+            {{ line.text }}
+        </a>
+    </td>
+</tr>
