@@ -47,4 +47,14 @@ class LineRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function persistArrayOf(array $entities)
+    {
+        $entityManager = $this->getEntityManager();
+        foreach ($entities as $entity) {
+            $entityManager->persist($entity);
+        }
+
+        $entityManager->flush();
+    }
 }
