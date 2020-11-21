@@ -10,7 +10,6 @@ use App\Repository\LineRepository;
 use DOMNode;
 use Symfony\Component\DomCrawler\Crawler;
 
-
 class SubtitleImporter
 {
     /** @var LineRepository */
@@ -36,9 +35,11 @@ class SubtitleImporter
         foreach ($xml->children() as $number => $line) {
             $lineData = $this->parseChild($line);
 
-            if (!$this->isAudioDescriptionLine($lineData['text'])) {
-                $lines[] = array_merge($lineData, ['number' => $n++]);
+            if (trim($lineData['text']) === '') {
+                continue;
             }
+
+            $lines[] = array_merge($lineData, ['number' => $n++]);
         }
 
         return $lines;
@@ -54,9 +55,13 @@ class SubtitleImporter
 
         $lineText = '';
         foreach ($line as $span) {
-            if ($span !== '') {
-                $lineText .= ' ' . $span;
+            if ($span === '') {
+                continue;
             }
+            if ($this->isAudioDescriptionLine((string) $span)) {
+                continue;
+            }
+            $lineText .= ' ' . $span;
         }
 
         $attributes = [
