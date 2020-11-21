@@ -32,7 +32,7 @@ class SubtitleImporter
         $xml = $contents->body->div;
 
         $lines = [];
-        $n = 0;
+        $n = 1;
         foreach ($xml->children() as $number => $line) {
             $lineData = $this->parseChild($line);
 

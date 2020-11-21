@@ -10,32 +10,30 @@
             max-width: 800px;
             width: 95%;
             font: 18px/1.5 sans-serif;
-
         }
 
-        a:link {
+        a:link, a:visited, a:active {
             color: black;
         }
 
-        /* visited link */
-        a:visited {
-            color: black;
-        }
-
-        /* mouse over link */
         a:hover {
             color: blue;
-        }
-
-        /* selected link */
-        a:active {
-            color: black;
         }
 
         .focus-box {
             /*border: thick solid #9393c9;*/
             /*border-radius: 5px;*/
             background: #e8b1b1;
+        }
+
+        td {
+            border: 0;
+        }
+
+        /* used in partial/line.html.twig*/
+        .left-td {
+            text-align: right;
+            padding-right: 5px;
         }
     </style>
 {% endblock %}
@@ -47,7 +45,9 @@
 
         <table cellspacing="0">
             {% for line in book.lines %}
+                {% apply spaceless %}
                 {% include 'book/partials/line.html.twig' with {'line': line, 'location': book.location} only %}
+                {% endapply %}
             {% endfor %}
         </table>
     </div>
@@ -70,11 +70,11 @@
                 let end = parseInt(match[2])
                 if (end) {
                     for (let n = begin; n <= end; n++) {
-                        document.getElementById(`line-${n}`).classList.add('focus-box')
+                        document.getElementById(`l-${n}`).classList.add('focus-box')
                     }
                     return
                 }
-                document.getElementById(`line-${begin}`).classList.add('focus-box')
+                document.getElementById(`l-${begin}`).classList.add('focus-box')
             }
         }
         window.onhashchange = highlightLine
